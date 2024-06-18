@@ -1,51 +1,74 @@
 within ThermofluidStream.Boundaries.Internal;
 partial model PartialTank "Partial Tank model for media that are partial gas and incompressible liquid"
-  replaceable package Medium =
-      ThermofluidStream.Media.myMedia.GasAndIncompressible.PartialGasAndIncompressible
-    "Medium model" annotation (
+
+  extends ThermofluidStream.Utilities.DropOfCommonsPlus;
+
+  // ------------------ Parameters equivalent to PartialVolume ---------------------------------------------------------
+  replaceable package Medium = Media.myMedia.Interfaces.PartialMedium "Medium model"
+   annotation (
       choicesAllMatching=true, Documentation(info="<html>
 <p>
 Medium package used in the Volume. Make sure it is the same as the
 inlets and outlets the volume is connected to.
 </p>
 </html>"));
-
-  parameter Boolean useHeatport = false "If true heatport is added";
-  parameter Modelica.Units.SI.Area A = 1 "Contact area of volume with medium"
+  parameter Boolean useHeatport = false "=true, if heatport is enabled"
+    annotation(Evaluate=true, HideResult=true, choices(checkBox=true));
+  parameter Boolean useInlet = true "= true, if inlet is enabled"
+    annotation(Evaluate=true, HideResult=true, choices(checkBox=true));
+  parameter Boolean useOutlet = true "= true, if outlet is enabled"
+    annotation(Evaluate=true, HideResult=true, choices(checkBox=true));
+  parameter SI.Area A = 1 "Heat transfer area"
     annotation(Dialog(enable=useHeatport));
-  parameter Modelica.Units.SI.CoefficientOfHeatTransfer U = 200 "Heat transfer coefficient to medium"
+  parameter SI.CoefficientOfHeatTransfer U = 200 "Thermal transmittance"
     annotation(Dialog(enable=useHeatport));
- parameter Boolean initialize_pressure = true "If true: initialize Pressure"
-    annotation(Dialog(tab= "Initialization"));
-  parameter Modelica.Units.SI.Pressure p_start = Medium.p_default "Initial Pressure"
-    annotation(Dialog(tab= "Initialization", enable=initialize_pressure));
-  parameter Boolean initialize_energy = false "Initialize specific inner energy with temperature or specific enthalpy condition"
-    annotation(Dialog(tab= "Initialization"));
-  parameter Modelica.Units.SI.Temperature T_start = Medium.T_default "Initial Temperature"
-    annotation(Dialog(tab= "Initialization", enable=initialize_energy and (not use_hstart)));
-  parameter Boolean use_hstart = false "True: specific enthalpy condition instead of Temperature"
-    annotation(Dialog(tab= "Initialization", enable=initialize_energy));
-  parameter Modelica.Units.SI.SpecificEnthalpy h_start = Medium.h_default "Initial specific enthalpy"
-    annotation(Dialog(tab= "Initialization", enable=initialize_energy and use_hstart));
-  parameter Boolean initialize_Xi = false "If true: initialize mass fractions"
-    annotation(Dialog(tab= "Initialization"));
-  parameter Medium.MassFraction Xi_0[Medium.nXi] = Medium.X_default[1:Medium.nXi] "Initial mass fraction"
-    annotation(Dialog(tab= "Initialization", enable=initialize_Xi));
-  parameter Boolean initialize_LiquidMass = true "If true: initialize with mass of the liquid medium component. Initialize_Xi must be false."
-    annotation(Dialog(tab= "Initialization", enable=not initialize_Xi));
-  parameter Modelica.Units.SI.Mass M_liq_start=0 "Initial mass of the liquid"
-    annotation(Dialog(tab= "Initialization", enable=initialize_LiquidMass));
 
-  parameter Utilities.Units.Inertance L = dropOfCommons.L "Inertance at inlet and outlet"
+  parameter Boolean initialize_pressure = true "=true, if pressure is initialized"
+    annotation(Dialog(tab= "Initialization",group="Pressure"),Evaluate=true, HideResult=true, choices(checkBox=true));
+  parameter SI.Pressure p_start = Medium.p_default "Initial pressure set value"
+    annotation(Dialog(tab= "Initialization",group="Pressure", enable=initialize_pressure));
+  parameter Boolean initialize_energy = true "= true, if internal energy is initialized"
+    annotation(Dialog(tab= "Initialization",group="Temperature"),Evaluate=true, HideResult=true, choices(checkBox=true));
+  parameter SI.Temperature T_start = Medium.T_default "Initial Temperature set value"
+    annotation(Dialog(tab= "Initialization",group="Temperature", enable=initialize_energy and (not use_hstart)));
+  parameter Boolean initialize_Xi = true "=true, if mass fractions are iinitialized"
+    annotation(Dialog(tab= "Initialization",group="Mass fractions"),Evaluate=true, HideResult=true, choices(checkBox=true));
+  parameter Medium.MassFraction Xi_0[Medium.nXi] = Medium.X_default[1:Medium.nXi] "Initial mass fractions set values"
+    annotation(Dialog(tab= "Initialization",group="Mass fractions", enable=initialize_Xi));
+  parameter Boolean use_hstart = false "=true, if internal energy is initialized with specific enthalpy"
+    annotation(Dialog(tab= "Initialization",group="Specific enthalpy", enable=initialize_energy),Evaluate=true, HideResult=true, choices(checkBox=true));
+  parameter SI.SpecificEnthalpy h_start = Medium.h_default "Initial specific enthalpy set value"
+    annotation(Dialog(tab= "Initialization",group="Specific enthalpy", enable=initialize_energy and use_hstart));
+  parameter Utilities.Units.Inertance L = dropOfCommons.L "Inertance of inlet/outlet"
     annotation (Dialog(tab="Advanced"));
-  parameter Real k_volume_damping(unit="1") = dropOfCommons.k_volume_damping "Damping factor multiplicator"
+  parameter Real k_volume_damping(unit="1", min=0) = dropOfCommons.k_volume_damping "Damping factor multiplicator"
     annotation(Dialog(tab="Advanced", group="Damping"));
-  parameter Modelica.Units.SI.MassFlowRate m_flow_assert(max=0) = -dropOfCommons.m_flow_reg "Assertion threshold for negative massflows"
+  parameter SI.MassFlowRate m_flow_assert(max=0) = -dropOfCommons.m_flow_reg "Assertion threshold for negative massflow"
     annotation(Dialog(tab="Advanced"));
-  parameter Boolean usePreferredMediumStates=false "Use medium states instead of the ones differentiated in this component"
+  parameter Boolean usePreferredMediumStates=false "=true, if preferred medium states are used"
+    annotation(Dialog(tab="Advanced"),Evaluate=true, HideResult=true, choices(checkBox=true));
+
+   // ---------------------------------------- New parameters ----------------------------------------------------------
+  parameter Boolean initialize_LiquidMass = true "= true, if mass of the liquid medium component is initialized (only possible if initialize_Xi=false)"
+    annotation(Dialog(tab= "Initialization",group="Mass fractions", enable=not initialize_Xi));
+  parameter SI.Mass M_liq_start=0 "Initial mass of the liquid"
+    annotation(Dialog(tab= "Initialization",group="Mass fractions", enable=initialize_LiquidMass));
+  parameter SI.Length outletTransition=0.01 "Bandwidth for smooth transition between gas and liquid at outlet"
     annotation(Dialog(tab="Advanced"));
-  parameter Modelica.Units.SI.Length outletTransition=0.01 "Width of band for smooth transition between gas and liquid at outlet"
-                                                                                                                                 annotation(Dialog(tab="Advanced"));
+   parameter SI.Length tankCenter[3]={0,0,0} "Position of the tank center"
+     annotation(Dialog(tab="General",group="Geometry"));
+   parameter Integer N_inlets = 2 "Number of inlets"
+     annotation(Dialog(tab="General",group="Geometry"));
+   parameter Integer M_outlets = 2 "Number of outlets"
+     annotation(Dialog(tab="General",group="Geometry"));
+   parameter SI.Length inletPositions[N_inlets,3]={{0,0,0},{0,0,0}} "Positions of all inlets"
+     annotation(Dialog(tab="General",group="Geometry"));
+   parameter SI.Length outletPositions[M_outlets,3]={{0,0,0},{0,0,0}} "Positions of all outlets"
+     annotation(Dialog(tab="General",group="Geometry"));
+  parameter SI.Pressure p_ref = 1e5 "Reference pressure of tank when volume is measured";
+  //The tank gets a bulk modulus to handle the stiffness of incompressible media better
+  SI.Volume V_ref(displayUnit="l") "Volume of the tank at p_ref";
+  parameter SI.BulkModulus K = 5e7 "Bulk modulus of tank (used also for stiffness modulation)";
 
 
   Interfaces.Inlet inlet[N_inlets](redeclare package Medium=Medium)
@@ -57,76 +80,61 @@ inlets and outlets the volume is connected to.
 
   Medium.BaseProperties medium(preferredMediumStates=usePreferredMediumStates);
 
-  Modelica.Units.SI.Volume V;
-  Modelica.Units.SI.Volume V_liquid;
-  parameter SI.Pressure p_ref = 1e5 "Reference pressure of tank when volume is measured";
-  //The tank gets a bulk modulus to handle the stiffness of incompressible media better
-  SI.Volume V_ref(displayUnit="l") "Volume of the tank at p_ref";
-  parameter SI.BulkModulus K = 5e7 "Bulk modulus of tank (used also for stiffness modulation)";
+  SI.Volume V "Volume";
+  SI.Volume V_liquid "Volume of liquid";
 
-  //Modelica.Units.SI.Volume V_gas "Gas volume in Tank";
+  //SI.Volume V_gas "Gas volume in Tank";
 
   //setting the state is to prohibit dynamic state selection e.g. in VolumesDirectCoupling
-  Modelica.Units.SI.Mass M(stateSelect=if usePreferredMediumStates then StateSelect.default else StateSelect.always) = V*medium.d;
-  Modelica.Units.SI.Mass MXi[Medium.nXi](each stateSelect=if usePreferredMediumStates then StateSelect.default else StateSelect.always) = M*medium.Xi;
-  Modelica.Units.SI.Energy U_med(stateSelect=if usePreferredMediumStates then StateSelect.default else StateSelect.always) = M*medium.u;
+  SI.Mass M(stateSelect=if usePreferredMediumStates then StateSelect.default else StateSelect.always) = V*medium.d "Mass";
+  SI.Mass MXi[Medium.nXi](each stateSelect=if usePreferredMediumStates then StateSelect.default else StateSelect.always) = M*medium.Xi "Masses of species";
+  SI.Energy U_med(stateSelect=if usePreferredMediumStates then StateSelect.default else StateSelect.always) = M*medium.u "Internal energy";
 
-  Modelica.Units.SI.HeatFlowRate Q_flow;
-  Modelica.Units.SI.Power W_v;
-   parameter Modelica.Units.SI.Length tankCenter[3]={0,0,0} "Position of the tank center" annotation(Dialog(tab="General",group="Geometry"));
-   parameter Integer N_inlets = 2 "Number of inlets"
-                                                    annotation(Dialog(tab="General",group="Geometry"));
-   parameter Integer M_outlets = 2 "Number of outlets"
-                                                      annotation(Dialog(tab="General",group="Geometry"));
+  SI.HeatFlowRate Q_flow "Heat flow rate";
+  SI.Power W_v "Work due to change of volume";
 
-   parameter Modelica.Units.SI.Length inletPositions[N_inlets,3]={{0,0,0},{0,0,0}} "Positions of all inlets" annotation(Dialog(tab="General",group="Geometry"));
-   parameter Modelica.Units.SI.Length outletPositions[M_outlets,3]={{0,0,0},{0,0,0}} "Positions of all outlets" annotation(Dialog(tab="General",group="Geometry"));
-   Modelica.Units.SI.Length centreOfMass[3];
+  SI.Length centreOfMass[3];
 
-   Modelica.Units.SI.Length staticHeadInlets[N_inlets] "distance perpendicular to liquid surface, 0 if above surface";
-   Modelica.Units.SI.Length staticHeadOutlets[M_outlets] "distance perpendicular to liquid surface, 0 if above surface";
-   Modelica.Units.SI.Pressure staticHeadInlets_Pa_relative[N_inlets] "relative pressure to liquid surface, 0 if above surface";
-   Modelica.Units.SI.Pressure staticHeadOutlets_Pa_relative[M_outlets] "relative pressure to liquid surface, 0 if above surface";
+  SI.Length staticHeadInlets[N_inlets] "Distance perpendicular to liquid surface, 0 if above surface";
+  SI.Length staticHeadOutlets[M_outlets] "Distance perpendicular to liquid surface, 0 if above surface";
+  SI.Pressure staticHeadInlets_Pa_relative[N_inlets] "Relative pressure to liquid surface, 0 if above surface";
+  SI.Pressure staticHeadOutlets_Pa_relative[M_outlets] "Relative pressure to liquid surface, 0 if above surface";
 
-Real normAcc[3]=Modelica.Math.Vectors.normalize(acceleration.a);
-
-
+  Real normAcc[3]=Modelica.Math.Vectors.normalize(acceleration.a) "Normalized acceleration vector (i.e. direction of acceleration)";
 
 protected
-  outer DropOfCommons dropOfCommons;
   outer ThermofluidStream.Boundaries.AccelerationBoundary acceleration;
 
-  Modelica.Units.SI.Pressure p_in[N_inlets] = Medium.pressure(inlet.state);
-  Modelica.Units.SI.SpecificEnthalpy h_in[N_inlets];
-  Medium.MassFraction Xi_in[Medium.nXi,N_inlets];
+  SI.Pressure p_in[N_inlets] = Medium.pressure(inlet.state) "Inlets pressures";
+  SI.SpecificEnthalpy h_in[N_inlets] "Inlets specific enthalpies";
+  Medium.MassFraction Xi_in[Medium.nXi,N_inlets] "Inlets mass fractions";
 
-  Medium.ThermodynamicState state_out[M_outlets];
-  Modelica.Units.SI.SpecificEnthalpy h_out[M_outlets];
-  Medium.MassFraction Xi_out[Medium.nXi,M_outlets];
+  Medium.ThermodynamicState state_out[M_outlets] "Outlets states";
+  SI.SpecificEnthalpy h_out[M_outlets] "Outlets specific enthalpies";
+  Medium.MassFraction Xi_out[Medium.nXi,M_outlets] "Outlets mass fractions";
 
   Real d(unit="1/(m.s)") = k_volume_damping*sqrt(abs(2*L/(V*max(density_derp_h, 1e-10)))) "Friction factor for coupled boundaries";
-  //Modelica.Units.SI.DerDensityByPressure density_derp_h=1e-5 "Partial derivative of density by pressure";
-   Modelica.Units.SI.DerDensityByPressure density_derp_h=(V_ref*medium.d)/(V*K) "Partial derivative of density by pressure";
+  //SI.DerDensityByPressure density_derp_h=1e-5 "Partial derivative of density by pressure at constant specific enthalpy";
+   SI.DerDensityByPressure density_derp_h=(V_ref*medium.d)/(V*K) "Partial derivative of density by pressure";
 
-  Modelica.Units.SI.Pressure r_damping = d*der(M);
+  SI.Pressure r_damping = d*der(M) "Damping of inertial pressure";
 
-  Modelica.Units.SI.Pressure r[N_inlets];
+  SI.Pressure r[N_inlets] "Inertial pressure";
 
-  Modelica.Units.SI.Temperature T_heatPort;
+  SI.Temperature T_heatPort "Heat port temperature";
 
-  Modelica.Units.SI.MassFlowRate m_flow_in[N_inlets] = inlet.m_flow;
-  Modelica.Units.SI.MassFlowRate m_flow_out[M_outlets] = outlet.m_flow;
+  SI.MassFlowRate m_flow_in[N_inlets] = inlet.m_flow "Inlets mass flow rates";
+  SI.MassFlowRate m_flow_out[M_outlets] = outlet.m_flow "Outlets mass flow rates";
 
-  final parameter Real ThresholdFull = 0.995 "threshold value near 1 to indicate when full";
-  final parameter Real ThresholdEmpty = 0.003 "threshold value near 0 to indicate when empty";
+  final parameter Real ThresholdFull = 0.995 "Threshold value near 1 to indicate when full";
+  final parameter Real ThresholdEmpty = 0.003 "Threshold value near 0 to indicate when empty";
 
-  Boolean fFull;
-  Boolean fEmpty;
-  Real shiftOutlet[M_outlets];
-  Modelica.Units.SI.Density liquidDensity=Medium.Liquid.density(medium.state)
-   "density of the liquid in the tank";
-  Modelica.Units.SI.Density gasDensity=Medium.Gas.density(medium.state)
-   "density of the gas in the tank";
+  Boolean fFull "=true, if full (> ThresholdFull)";
+  Boolean fEmpty "=true, if empty (< ThresholdEmpty)";
+  Real shiftOutlet[M_outlets] "What does shiftOulet mean?";
+  SI.Density liquidDensity=Medium.Liquid.density(medium.state) "Density of the liquid in the tank";
+  SI.Density gasDensity=Medium.Gas.density(medium.state) "Density of the gas in the tank";
+
 initial equation
   if initialize_pressure then
     medium.p=p_start;
@@ -299,11 +307,11 @@ equation
           arrow={Arrow.None,Arrow.Filled},
           thickness=1),
        Text(
-         extent={{-120,48},{-94,6}},
+         extent={{-120,60},{-82,20}},
          textColor={116,116,116},
           textString="%N_inlets"),
        Text(
-         extent={{68,48},{94,6}},
+         extent={{80,60},{120,20}},
          textColor={116,116,116},
           textString="%M_outlets"),
         Text(

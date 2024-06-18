@@ -2,26 +2,25 @@ within ThermofluidStream.Processes;
 model StaticHead "Static head model"
   extends ThermofluidStream.Interfaces.SISOFlow(final L=L_value, final clip_p_out=true);
 
-  parameter Modelica.Units.SI.Length fromPosition[3]
-    "Coordinates for the position the static head is computed from" annotation (Dialog(group="Geometry",
-        enable=true));
-  parameter Modelica.Units.SI.Length toPosition[3]
-    "Coordinates for the position the static head is computed to" annotation (Dialog(group="Geometry",
-        enable=true));
+  parameter SI.Length fromPosition[3] "Coordinates of inlet"
+    annotation (Dialog(group="Geometry",enable=true));
+  parameter SI.Length toPosition[3] "Coordinates of outlet"
+    annotation (Dialog(group="Geometry", enable=true));
 
-  parameter ThermofluidStream.Utilities.Units.Inertance L_value=dropOfCommons.L
-    "Inertance of pipe" annotation (Dialog(tab="Advanced", enable=not computeL));
+  parameter ThermofluidStream.Utilities.Units.Inertance L_value=dropOfCommons.L "Inertance of pipe"
+    annotation (Dialog(tab="Advanced", enable=not computeL));
 
-  parameter Modelica.Units.SI.Density rho_min=dropOfCommons.rho_min
-    "Minimal input density" annotation (Dialog(tab="Advanced"));
+  parameter SI.Density rho_min=dropOfCommons.rho_min "Minimal input density"
+    annotation (Dialog(tab="Advanced"));
+  parameter Boolean displayPositions=true "=true, if positions are showed in icon"
+    annotation(Dialog(tab="Layout",group="Display parameters",enable=displayParameters),Evaluate=true, HideResult=true, choices(checkBox=true));
 
-    Modelica.Units.SI.Length staticHead "static head in m";
-    Modelica.Units.SI.Pressure staticHead_Pa_relative "static head measured i Pa, taking current acceleration and limitations into account";
- parameter Boolean displayPositions=true "show positions in icon";
+  SI.Length staticHead "Static head";
+  SI.Pressure staticHead_Pa_relative "Static head (pressure), taking current acceleration and limitations into account";
+
 protected
-  Modelica.Units.SI.Density rho_in=max(rho_min, Medium.density(inlet.state))
-    "Density of medium entering";
-    outer ThermofluidStream.Boundaries.AccelerationBoundary acceleration;
+  SI.Density rho_in=max(rho_min, Medium.density(inlet.state)) "Density of medium entering";
+  outer ThermofluidStream.Boundaries.AccelerationBoundary acceleration;
 equation
   dp = -(fromPosition - toPosition)*acceleration.a*rho_in;
   h_out = h_in;
@@ -36,6 +35,10 @@ equation
 
   annotation (
     Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+        Text(visible=displayInstanceName,
+          extent={{-150,140},{150,100}},
+          textString="%name",
+          textColor=dropOfCommons.instanceNameColor),
         Ellipse(
           extent={{-56,54},{64,-66}},
           lineColor={28,108,200},
@@ -54,14 +57,14 @@ equation
           fillColor={255,255,255},
           fillPattern=FillPattern.Solid),
         Text(visible=displayPositions,
-          extent={{-164,118},{0,18}},
-          textColor={28,108,200},
+          extent={{-152,60},{-2,30}},
+          textColor={0,0,0},
           textString="%fromPosition"),
         Text(
           visible=displayPositions,
-          extent={{0,-20},{162,-118}},
-          textColor={28,108,200},
-textString="%toPosition"),
+          extent={{0,-30},{170,-60}},
+          textColor={0,0,0},
+          textString="%toPosition"),
         Line(
           points={{28,72},{-16,14}},
           color={206,103,0},

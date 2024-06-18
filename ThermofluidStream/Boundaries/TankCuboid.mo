@@ -1,6 +1,6 @@
 within ThermofluidStream.Boundaries;
-model TankCuboid
-  "This is a cuboid tank in an acceleration field for the special case of the liquid surface normal to xz-plane. "
+model TankCuboid "This is a cuboid tank in an acceleration field for the special case of the liquid surface normal to xz-plane. "
+
   extends Internal.PartialTank;
   //Everything media related is located in the partialTank. Below is only geometry
   //dependent equations for the computation of static head and, for now, a
@@ -8,23 +8,27 @@ model TankCuboid
   //centreOfMass, staticHeadInlets and staticHeadOutlets needs to be provided.
   //The division is made to easily implement any geometry, regardless of complexity.
 
-  parameter Modelica.Units.SI.Length xLength "Length in x-direction" annotation(Dialog(tab="General",group="Geometry"));
-  parameter Modelica.Units.SI.Length yLength "Length in y-direction" annotation(Dialog(tab="General",group="Geometry"));
-  parameter Modelica.Units.SI.Length zLength "Length in z-direction" annotation(Dialog(tab="General",group="Geometry"));
-     Modelica.Units.SI.Length D;
+  parameter SI.Length xLength "Length in x-direction"
+    annotation(Dialog(tab="General",group="Geometry"));
+  parameter SI.Length yLength "Length in y-direction"
+    annotation(Dialog(tab="General",group="Geometry"));
+  parameter SI.Length zLength "Length in z-direction"
+    annotation(Dialog(tab="General",group="Geometry"));
+
+  SI.Length D "What does D mean?";
 
 protected
-   final parameter Real eps_geometry = 0.0000001 "numerical epsilon for geometric considerations";
+   final parameter Real eps_geometry = 0.0000001 "Numerical epsilon for geometric considerations";
 
-   Modelica.Units.SI.Length D1;
-   Modelica.Units.SI.Length D2;
-   Modelica.Units.SI.Length D3;
-   Modelica.Units.SI.Length D4;
-   Real nx=normAcc[1];
-   Real nz=normAcc[3];
-   Modelica.Units.SI.Area Area = V_liquid/yLength;
-   Modelica.Units.SI.Length AxLimit;
-   Modelica.Units.SI.Length AzLimit;
+   SI.Length D1 "What does D1 mean?";
+   SI.Length D2 "What does D2 mean?";
+   SI.Length D3 "What does D3 mean?";
+   SI.Length D4 "What does D4 mean?";
+   Real nx=normAcc[1] "x component of normalized acceleration vector";
+   Real nz=normAcc[3] "z component of normalized acceleration vector";
+   SI.Area Area = V_liquid/yLength "What does Area mean?";
+   SI.Length AxLimit "What does AxLimit mean?";
+   SI.Length AzLimit "What does AzLimit mean?";
 
 initial equation
 
@@ -133,5 +137,9 @@ SAAB Aerosystems, 2024
 <p>To specify the acceleration vector, please use the <a href=\"ThermofluidStream.Boundaries.AccelerationBoundary\">AccelerationBoundary</a> component.</p>
 <p>The tank works only with media that have gas and incompressible parts contained in them.</p>
 <p><span style=\"font-family: Arial; color: #ff5500;\">Beware: This is a new addition to the library. It may be subject to design reconsiderations in future versions</span></p>
-</html>"));
+</html>"), Icon(graphics={
+Text(visible=displayInstanceName,
+          extent={{-150,140},{150,100}},
+          textString="%name",
+          textColor=dropOfCommons.instanceNameColor)}));
 end TankCuboid;
