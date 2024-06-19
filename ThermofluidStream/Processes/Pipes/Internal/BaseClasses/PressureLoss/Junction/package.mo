@@ -9,8 +9,8 @@ Package containing the pressure loss functions:
 </p>
 
 <ul>
-<li><a href=\"modelica://ThermofluidStream.Processes.Pipes.Internal.BaseClasses.PressureLoss.Junction.dp_JunctionWyeType1_DP\">dp_JunctionWyeType1_DP</a></li>
-<li><a href=\"modelica://ThermofluidStream.Processes.Pipes.Internal.BaseClasses.PressureLoss.Junction.dp_JunctionWyeType2_DP\">dp_JunctionWyeType2_DP</a></li>
+  <li><a href=\"modelica://ThermofluidStream.Processes.Pipes.Internal.BaseClasses.PressureLoss.Junction.dp_JunctionWyeType1_DP\">dp_JunctionWyeType1_DP</a></li>
+  <li><a href=\"modelica://ThermofluidStream.Processes.Pipes.Internal.BaseClasses.PressureLoss.Junction.dp_JunctionWyeType2_DP\">dp_JunctionWyeType2_DP</a></li>
 </ul>
 
 <p>

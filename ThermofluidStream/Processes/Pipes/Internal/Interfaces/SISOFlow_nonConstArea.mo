@@ -74,17 +74,17 @@ equation
 Extended version of <a href=\"modelica://ThermofluidStream.Interfaces.SISOFlow\">SISOFlow</a> to <strong>restore Bernoulli's principle</strong> (change of static pressure due to change of velocity), 
 i.e. diffusors (different crosssectional area of inlet and outlet).
 </p>
-<p>
-<code>p_out = p_in + dq + dp</code>
-</p>
+<blockquote><pre>
+p_out = p_in + dq + dp
+</pre></blockquote>
 
 <p>
 Change of static pressure due to change of velocity dq:
 </p>
 
-<p>
-<code>dq = rho/2 * (c_in^2 - c_out^2)</code>
-</p>
+<blockquote><pre>
+dq = rho/2 * (c_in^2 - c_out^2)
+</pre></blockquote>
 
 <p>
 <em>[P. Jordan; HTWG Konstanz; 01/24]</em>

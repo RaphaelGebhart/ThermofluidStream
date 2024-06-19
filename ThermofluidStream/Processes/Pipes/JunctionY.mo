@@ -1,7 +1,7 @@
 within ThermofluidStream.Processes.Pipes;
 model JunctionY "Pressure drop of an Y-shaped junction"
 
-  extends Internal.Interfaces.partialJunctionY;
+  extends Internal.Interfaces.PartialJunctionY;
 
   // Geometry
   parameter SI.Length d_straight "Straight inlet diameter"
@@ -110,7 +110,7 @@ equation
     Line( origin={0,-40},
           points={{-80,0},{80,0}},
           color={0,140,72},
-          thickness=0.5)},                                                                          coordinateSystem(extent = {{-100, -100}, {100, 100}})),
+          thickness=0.5)}, coordinateSystem(extent = {{-100, -100}, {100, 100}})),
     Documentation(info="<html>
 <p>
 This component models a <strong>Y-shaped Junction</strong>. It computes the <strong>pressure loss</strong> of the fluid depending on the massflow rate or the massflow rate depending on a given pressure difference,
@@ -122,7 +122,7 @@ If two pressure boundaries are used, be careful to prevent back flow into the co
 </p>
 
 <p>
-The Y-Junction component is extending the partial model <a href=\"modelica://ThermofluidStream.Processes.Pipes.Internal.Interfaces.partialJunctionY\">partialJunctionY</a> implementing the common flow balances 
+The Y-Junction component is extending the partial model <a href=\"modelica://ThermofluidStream.Processes.Pipes.Internal.Interfaces.PartialJunctionY\">PartialJunctionY</a> implementing the common flow balances 
 for fluid merging components. For the pressure loss calculation the functions <a href=\"modelica://ThermofluidStream.Processes.Pipes.Internal.BaseClasses.PressureLoss.Junction.dp_JunctionWyeType1_DP\">dp_SplitterWyeType1_DP</a>
 and <a href=\"modelica://ThermofluidStream.Processes.Pipes.Internal.BaseClasses.PressureLoss.Junction.dp_JunctionWyeType1_DP\">dp_JunctionWyeType2_DP</a> are used <strong>depending on the users geometry input</strong>.
 See their documentation for a detailed description on the pressure loss calculation an figuers containing pressure loss coefficieint charts.
@@ -139,8 +139,8 @@ The different types of splitter geometry are defined as described in Idelchik (1
 </p>
 
 <ul>
-<li>Type I: Fb + Fs &gt; Fc and Fc = Fs \"straight pipe with attached pipe branch\"</li>
-<li> Type II: Fb + Fs = Fc \"two smaller branches merging into a straight pipe, whereby the total inlet and outlet area remains the same\"</li>
+  <li>Type I: Fb + Fs &gt; Fc and Fc = Fs \"straight pipe with attached pipe branch\"</li>
+  <li> Type II: Fb + Fs = Fc \"two smaller branches merging into a straight pipe, whereby the total inlet and outlet area remains the same\"</li>
 </ul>
 
 <p>

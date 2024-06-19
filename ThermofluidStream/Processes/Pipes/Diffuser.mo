@@ -18,7 +18,7 @@ model Diffuser "Pressure drop of a conical diffusor"
   parameter ThermofluidStream.Processes.Internal.Material material = ThermofluidStream.Processes.Internal.Material.other "Material of pipe"
     annotation(Dialog(group="Roughness"));
   parameter SI.Length ks_input "Pipe roughness"
-    annotation(Dialog(group="Roughness",enable=ThermofluidStream.Processes.Internal.Material.other));
+    annotation(Dialog(group="Roughness",enable = material == ThermofluidStream.Processes.Internal.Material.other));
   //Advanced
   parameter ThermofluidStream.Utilities.Units.Inertance L_value = dropOfCommons.L "Inertance of pipe" annotation (
     Dialog(tab = "Advanced", enable = not computeL));

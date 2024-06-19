@@ -1,5 +1,5 @@
 within ThermofluidStream.Processes.Pipes.Internal.Interfaces;
-partial model partialJunctionY "Duplicate of JunctionN considering dynamic effects"
+partial model PartialJunctionY "Duplicate of JunctionN considering dynamic effects"
 
   extends ThermofluidStream.Utilities.DropOfCommonsPlus;
 
@@ -135,4 +135,4 @@ For implementation of other junction configurations it is suggested to copy the 
 <img src=\"modelica://ThermofluidStream/Resources/Doku/Fluid_HTWG/HTWG_en_Markenzeichen_klein_pos_1C.png\" alt=\"HTWG Konstanz\" width=\"350\" height=\"100\">
 </p>
 </html>"));
-end partialJunctionY;
+end PartialJunctionY;

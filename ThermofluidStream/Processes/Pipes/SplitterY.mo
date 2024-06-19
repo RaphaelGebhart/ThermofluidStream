@@ -1,7 +1,7 @@
 within ThermofluidStream.Processes.Pipes;
 model SplitterY "Pressure drop of an Y-shaped splitter"
 
-  extends Internal.Interfaces.partialSplitterY;
+  extends Internal.Interfaces.PartialSplitterY;
 
   // Geometry
   parameter SI.Length d_in "(Common) inlet diameter"
@@ -102,7 +102,7 @@ equation
     Line( origin={0,-40},
           points={{-80,0},{80,0}},
           color={0,140,72},
-          thickness=0.5)},                                                                          coordinateSystem(extent = {{-100, -100}, {100, 100}})),
+          thickness=0.5)}, coordinateSystem(extent = {{-100, -100}, {100, 100}})),
     Documentation(info="<html>
 <p>
 This component models a <strong>Y-shaped Splitter</strong>. It computes the pressure loss of the fluid depending on the massflow rate or the massflow rate depending on a given pressure difference, 
@@ -113,7 +113,7 @@ This model is a <strong>splitter</strong> component only. Therfore flows <strong
 </p>
 
 <p>
-The Y-Splitter component is extending the partial model <a href=\"modelica://ThermofluidStream.Processes.Pipes.Internal.Interfaces.partialSplitterY\">partialSplitterY</a> implementing the common flow balances 
+The Y-Splitter component is extending the partial model <a href=\"modelica://ThermofluidStream.Processes.Pipes.Internal.Interfaces.PartialSplitterY\">PartialSplitterY</a> implementing the common flow balances 
 for fluid splitting components. For the pressure loss calculation the functions 
 <a href=\"modelica://ThermofluidStream.Processes.Pipes.Internal.BaseClasses.PressureLoss.Splitter.dp_SplitterWyeType1_DP\">dp_SplitterWyeType1_DP</a> and 
 <a href=\"modelica://ThermofluidStream.Processes.Pipes.Internal.BaseClasses.PressureLoss.Splitter.dp_SplitterWyeType2_DP\">dp_SplitterWyeType2_DP</a> are used <strong>depending on the users geometry input</strong>.
@@ -131,8 +131,8 @@ The different types of splitter geometry are defined as described in Idelchik (1
 </p>
 
 <ul>
-<li>Type I: Fb + Fs &gt; Fc and Fc = Fs \"straight pipe with attached pipe branch\"</li>
-<li>Type II: Fb + Fs = Fc \"straight pipe splitting in two smaller branches, whereby the inlet and total outlet area remain the same\"</li>
+  <li>Type I: Fb + Fs &gt; Fc and Fc = Fs \"straight pipe with attached pipe branch\"</li>
+  <li>Type II: Fb + Fs = Fc \"straight pipe splitting in two smaller branches, whereby the inlet and total outlet area remain the same\"</li>
 </ul>
 
 <p>

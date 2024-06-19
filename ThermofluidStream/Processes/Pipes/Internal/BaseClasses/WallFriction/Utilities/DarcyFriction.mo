@@ -84,13 +84,13 @@ Function calculating Darcy friction factor lambda as f(m_flow, D_h, Delta, rho, 
 </p>
 
 <ul>
-<li>m_flow: mass flow rate [kg/s]</li>
-<li>D_h: hydraulic diameter [m]</li>
-<li>Delta: relative roughness [m/m]</li>
-<li>rho: density [kg/m^3]</li>
-<li>mu: dynamic viscosity [Pa.s]</li>
-<li>Re1: lower Reynolds Number boundary for laminar-turbulent transition flow regime [-]</li>
-<li>Re2: upper Reynolds Number boundary for laminar-turbulent transition flow regime [-]</li>
+  <li>m_flow: mass flow rate [kg/s]</li>
+  <li>D_h: hydraulic diameter [m]</li>
+  <li>Delta: relative roughness [m/m]</li>
+  <li>rho: density [kg/m^3]</li>
+  <li>mu: dynamic viscosity [Pa.s]</li>
+  <li>Re1: lower Reynolds Number boundary for laminar-turbulent transition flow regime [-]</li>
+  <li>Re2: upper Reynolds Number boundary for laminar-turbulent transition flow regime [-]</li>
 </ul>
 
 <p>

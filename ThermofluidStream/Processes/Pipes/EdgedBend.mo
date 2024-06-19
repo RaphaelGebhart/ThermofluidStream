@@ -12,7 +12,7 @@ model EdgedBend "Pressure drop due to edged bend using Modelica.Fluid.Dissipatio
   parameter ThermofluidStream.Processes.Internal.Material material = ThermofluidStream.Processes.Internal.Material.other "Material of pipe"
     annotation(Dialog(group="Roughness"));
   parameter SI.Length ks_input "Roughness of pipe"
-    annotation(Dialog(group="Roughness"),enable = material == ThermofluidStream.Processes.Internal.Material.other);
+    annotation(Dialog(group="Roughness",enable = material == ThermofluidStream.Processes.Internal.Material.other));
   //Initialization
   parameter StateSelect dpStateSelect = StateSelect.default "State select for pressure difference dp"
     annotation(Dialog(tab = "Advanced"));
@@ -67,8 +67,6 @@ equation
   h_out = h_in;
   Xi_out = Xi_in;
   annotation (
-    Dialog(enable = (material == ThermofluidStream.Processes.Internal.Material.other)),
-    choices(choice = ThermofluidStream.Processes.Internal.Material.concrete "Concrete ks=5mm", choice = ThermofluidStream.Processes.Internal.Material.wood "Wood ks=0.5mm", choice = ThermofluidStream.Processes.Internal.Material.castIron "Cast Iron ks=0.25mm", choice = ThermofluidStream.Processes.Internal.Material.galvanizedIron "Galvanized Iron ks=0.15mm", choice = ThermofluidStream.Processes.Internal.Material.steel "Steel ks=0.059mm", choice = ThermofluidStream.Processes.Internal.Material.drawnPipe "Drawn Pipe ks=0.0015mm"),
     defaultComponentName = "edged_bend",
     Documentation(info="<html>
 <p>

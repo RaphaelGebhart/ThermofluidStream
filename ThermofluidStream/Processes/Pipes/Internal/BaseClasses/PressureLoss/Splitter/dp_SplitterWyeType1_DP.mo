@@ -49,11 +49,11 @@ where:
 </p>
 
 <ul>
-<li>w_c: velocity at common channel [m/s]</li>
-<li>w_b: velocity at branching channel [m/s]</li>
-<li>w_s: velocity at straight channel [m/s]</li>
-<li>alpha: branching angle [rad]</li>
-<li>rho: density [kg/m^3]</li>
+  <li>w_c: velocity at common channel [m/s]</li>
+  <li>w_b: velocity at branching channel [m/s]</li>
+  <li>w_s: velocity at straight channel [m/s]</li>
+  <li>alpha: branching angle [rad]</li>
+  <li>rho: density [kg/m^3]</li>
 </ul>
 
 <p>
@@ -61,8 +61,8 @@ Calculation according to Idelchik (1960). The pressure loss is calculated as
 </p>
 
 <ul>
-<li>in branch: <code>dp_b = rho/2 * zeta_cb * w_c^2</code></li>
-<li>in straight channel: <code>dp_s = rho/2 * zeta_cs * w_c^2</code></li>
+  <li>in branch: <code>dp_b = rho/2 * zeta_cb * w_c^2</code></li>
+  <li>in straight channel: <code>dp_s = rho/2 * zeta_cs * w_c^2</code></li>
 </ul>
 
 <p>
@@ -70,8 +70,8 @@ As you can see above both pressure loss calculation are with respect to the velo
 </p>
 
 <ul>
-<li>A': coefficient of velocity ratio w_b/w_c</li>
-<li>zeta_cb': uncorrected pressure loss coefficient</li>
+  <li>A': coefficient of velocity ratio w_b/w_c</li>
+  <li>zeta_cb': uncorrected pressure loss coefficient</li>
 </ul>
 
 <p>
@@ -83,17 +83,17 @@ Since the velocity ratio may change during simulations, the discontinuity in A' 
 The uncorrected pressure loss coefficient <code>zeta'_cb</code> is determined by the formula:
 </p>
 
-<p>
-<code> zeta'_cb = 1 + w_relbc^2 - 2*cos(alpha)</code>
-</p>
+<blockquote><pre>
+zeta'_cb = 1 + w_relbc^2 - 2*cos(alpha)
+</pre></blockquote>
 
 <p>
 The pressure loss coefficient at the straight channel for all brnaching angles is described as:
 </p>
 
-<p>
-<code> zeta_cs = 0.4*(1-w_relsc)^2</code>
-</p> 
+<blockquote><pre>
+zeta_cs = 0.4*(1-w_relsc)^2
+</pre></blockquote>
 
 <p>
 The following figure <strong>Fig.2</strong>, pressure loss coefficients of the branching channel are shown. (Currently not yet available) 

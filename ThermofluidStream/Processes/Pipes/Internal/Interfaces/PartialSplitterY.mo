@@ -1,5 +1,5 @@
 within ThermofluidStream.Processes.Pipes.Internal.Interfaces;
-partial model partialSplitterY "Duplicate of SplitterM considering dynamic effects"
+partial model PartialSplitterY "Duplicate of SplitterM considering dynamic effects"
 
   extends ThermofluidStream.Utilities.DropOfCommonsPlus;
 
@@ -70,16 +70,16 @@ in the extending model) are added.
 From those changes in static pressures each outlet state is defined. Additional equations:
 </p>
 
-<p>
-<code>  
-  dq_straight = Medium.density(inlet.state)/2*(c_in^2 - c_straight^2);<br>
-  dq_branching = Medium.density(inlet.state)/2*(c_in^2 - c_branching^2);<br><br>
-  p_straight = p_in + dq_straight + dp_straight;<br>
-  p_branching = p_in + dq_branching + dp_branching;<br><br>
-  outlet_straight.state = Medium.setState_phX(p_straight, h_out, Xi_out);<br>
-  outlet_branching.state = Medium.setState_phX(p_branching, h_out, Xi_out);<br>
-</code>
-</p>
+<blockquote><pre>
+dq_straight = Medium.density(inlet.state)/2*(c_in^2 - c_straight^2);
+dq_branching = Medium.density(inlet.state)/2*(c_in^2 - c_branching^2);
+
+p_straight = p_in + dq_straight + dp_straight;
+p_branching = p_in + dq_branching + dp_branching;
+
+outlet_straight.state = Medium.setState_phX(p_straight, h_out, Xi_out);
+outlet_branching.state = Medium.setState_phX(p_branching, h_out, Xi_out);
+</pre></blockquote>
 
 <p>
 This partial model is base for Y-shaped splitter models. For implementation of other splitter configurations it is suggested to copy the code and adjust the icon positioning as needed.
@@ -92,7 +92,5 @@ This partial model is base for Y-shaped splitter models. For implementation of o
 <p>
 <img src=\"modelica://ThermofluidStream/Resources/Doku/Fluid_HTWG/HTWG_en_Markenzeichen_klein_pos_1C.png\" alt=\"HTWG Konstanz\" width=\"350\" height=\"100\">
 </p>
-
-
 </html>"));
-end partialSplitterY;
+end PartialSplitterY;

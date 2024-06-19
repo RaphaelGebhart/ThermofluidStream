@@ -63,16 +63,16 @@ Function calculating the pressure loss of a Y-shaped junction of type II (<stron
 </p>
 
 <ul>
-<li>F_c: cross sectional area of common channel [m^2]</li>
-<li>F_b: cross sectional area of branch [m^2]</li>
-<li>w_c: velocity at common channel [m/s]</li>
-<li>w_b: velocity at branching channel [m/s]</li>
-<li>w_s: velocity at straight channel [m/s]</li>
-<li>alpha: branching angle [rad]</li>
-<li>rho: density [kg/m^3]</li>
-<li>k: coefficient of branching angle dependency [-]</li>
-<li>K_b: free term correction of area ratio dependency at branch [-]</li>
-<li>K_s: free term correction of area ratio dependency at straight channel [-]</li>
+  <li>F_c: cross sectional area of common channel [m^2]</li>
+  <li>F_b: cross sectional area of branch [m^2]</li>
+  <li>w_c: velocity at common channel [m/s]</li>
+  <li>w_b: velocity at branching channel [m/s]</li>
+  <li>w_s: velocity at straight channel [m/s]</li>
+  <li>alpha: branching angle [rad]</li>
+  <li>rho: density [kg/m^3]</li>
+  <li>k: coefficient of branching angle dependency [-]</li>
+  <li>K_b: free term correction of area ratio dependency at branch [-]</li>
+  <li>K_s: free term correction of area ratio dependency at straight channel [-]</li>
 </ul>
 
 <p>
@@ -80,8 +80,8 @@ Calculation according to Idelchik (1960). The pressure loss is calculated as:
 </p>
 
 <ul>
-<li>in branch: <code>dp_b = rho/2 * zeta_cb * w_c^2</code></li>
-<li>in straight channel: <code>dp_s = rho/2 * zeta_cs * w_c^2</code></li>
+  <li>in branch: <code>dp_b = rho/2 * zeta_cb * w_c^2</code></li>
+  <li>in straight channel: <code>dp_s = rho/2 * zeta_cs * w_c^2</code></li>
 </ul>
 
 <p>
@@ -89,23 +89,23 @@ As you can see above both pressure loss calculation are with respect to the velo
 </p>
 
 <p>
-case 1 (alpha &lt;= 60°): <code>zeta_cb = 1 + w_relbc^2 - 2*F_relcs*(1 - Q_relbc)^2 - k * F_relcb*(Q_relbc)^2 + K_b</code>
+case 1 (alpha &lt;= 60&deg;): <code>zeta_cb = 1 + w_relbc^2 - 2*F_relcs*(1 - Q_relbc)^2 - k * F_relcb*(Q_relbc)^2 + K_b</code>
 </p>
 
 <ul>
-<li>w_relbc = w_b/w_c: velocity ratio</li>
-<li>Q_relbc = Q_b/Q_c: volume flow ratio</li>
-<li>F_relcb = F_c/F_b: area ratio</li>
-<li>F_relcs = F_c/F_s: area ratio</li>
+  <li>w_relbc = w_b/w_c: velocity ratio</li>
+  <li>Q_relbc = Q_b/Q_c: volume flow ratio</li>
+  <li>F_relcb = F_c/F_b: area ratio</li>
+  <li>F_relcs = F_c/F_s: area ratio</li>
 </ul>
 
 <p>
 with coefficient k taking the branching angle depedency into account. k is approximated using a 3rd order polynomial
 </p>
 
-<p>
-<code>k(alpha°) = -0.0001766 * alpha^2 - 0.007536 * alpha + 2.1043</code>
-</p>
+<blockquote><pre>
+k(alpha&deg;) = -0.0001766 * alpha^2 - 0.007536 * alpha + 2.1043
+</pre></blockquote>
 
 <p>
 and with free term correction K_b as f(alpha, F_relbc). Since there are few data points a defining a approximation formula is not useful, table interpolation is used instead.
@@ -123,7 +123,7 @@ The interpolation is done by linear segments since \"CombiTable2Dv\" does not pe
     <td>0.5</td>
   </tr>
   <tr>
-    <td>alpha = 60°</td>
+    <td>alpha = 60&deg;</td>
     <td>0</td>
     <td>0</td>
     <td>0</td>
@@ -131,7 +131,7 @@ The interpolation is done by linear segments since \"CombiTable2Dv\" does not pe
     <td>0.1</td>
   </tr>
   <tr>
-    <td>alpha=90°</td>
+    <td>alpha=90&deg;</td>
     <td>0</td>
     <td>0</td>
     <td>0.1</td>
@@ -142,13 +142,13 @@ The interpolation is done by linear segments since \"CombiTable2Dv\" does not pe
 
 
 <p>
-For case 2 (alpha = 90°): <code>zeta_cb = 1 + w_relbc^2 - 2*F_relcs*(1 - Q_relbc)^2 + K_b</code>
+For case 2 (alpha = 90&deg;): <code>zeta_cb = 1 + w_relbc^2 - 2*F_relcs*(1 - Q_relbc)^2 + K_b</code>
 </p>
 
 <p> 
-case 3 (60° &lt; alpha &lt;90°): Since there is no aproximation formula nor data available in this case zeta_cb is interpolated linear between the function of case 1 and 2.
+case 3 (60&deg; &lt; alpha &lt;90&deg;): Since there is no aproximation formula nor data available in this case zeta_cb is interpolated linear between the function of case 1 and 2.
 The <strong>pressure loss coefficient of the straight channel zeta_cs</strong> is calculated as:
-case 1 (alpha &lt;= 60°): <code>zeta_cs = 1 + F_relcs^2 * (1-Q_relbc)^2 - k * F_relcb * Q_relbc^2 + K_s</code>, where k is the same coefficient discribed above and K_s the free term correction of the area ratio. 
+case 1 (alpha &lt;= 60&deg;): <code>zeta_cs = 1 + F_relcs^2 * (1-Q_relbc)^2 - k * F_relcb * Q_relbc^2 + K_s</code>, where k is the same coefficient discribed above and K_s the free term correction of the area ratio. 
 As befor K_s is implemented using table interpolation of 2-dimensional table and vector in- and output.
 </p>
 
@@ -162,7 +162,7 @@ As befor K_s is implemented using table interpolation of 2-dimensional table and
     <td>0.5</td>
   </tr>
   <tr>
-    <td>alpha = 15°</td>
+    <td>alpha = 15&deg;</td>
     <td>0</td>
     <td>0</td>
     <td>0</td>
@@ -170,7 +170,7 @@ As befor K_s is implemented using table interpolation of 2-dimensional table and
     <td>0.4</td>
   </tr>
   <tr>
-    <td>alpha=30°</td>
+    <td>alpha=30&deg;</td>
     <td>0</td>
     <td>0</td>
     <td>0</td>
@@ -178,7 +178,7 @@ As befor K_s is implemented using table interpolation of 2-dimensional table and
     <td>0.4</td>
   </tr>
   <tr>
-    <td>alpha=45°</td>
+    <td>alpha=45&deg;</td>
     <td>0</td>
     <td>0.05</td>
     <td>0.14</td>
@@ -186,7 +186,7 @@ As befor K_s is implemented using table interpolation of 2-dimensional table and
     <td>0.3</td>
   </tr>
   <tr>
-    <td>alpha=60°</td>
+    <td>alpha=60&deg;</td>
     <td>0</td>
     <td>0</td>
     <td>0</td>
@@ -194,7 +194,7 @@ As befor K_s is implemented using table interpolation of 2-dimensional table and
     <td>0.25</td>
   </tr>
   <tr>
-    <td>alpha=90°</td>
+    <td>alpha=90&deg;</td>
     <td>0.37</td>
     <td>0.46</td>
     <td>0.46</td>
@@ -204,45 +204,43 @@ As befor K_s is implemented using table interpolation of 2-dimensional table and
 </table>
 
 <p>
-case 2 (alpha = 90°): Since Idel'chik does not provied a approximation formula for alpha = 90° an approximation of the given date has to be definied. 
+case 2 (alpha = 90&deg;): Since Idel'chik does not provied a approximation formula for alpha = 90&deg; an approximation of the given date has to be definied. 
 Because there is only a small amount of data available, the approximation shuold be understood as an estimate, especially for small area ratios:
 <code>zeta_cs = A * [1 + F_relcs^2 * (1 - Q_relbc)^2 - 2 * B * F_relcs * (1 - Q_relbc)^2 - F_rel_cb * Q_relbc^2] + K_s</code>
 with the coefficients A and B approximated with the formulas:
 </p>
 
-<p>
-<code>
-A = 0.242 * log(F_relbc) + 1.048<br>
+<blockquote><pre>
+A = 0.242 * log(F_relbc) + 1.048
 B = 3.02 * (Frelbc)^2 - 2.278 * F_relbc + 1.582
-</code>
+</pre></blockquote>
+
+<p>
+case 3 (60&deg; &lt; alpha &lt;90&deg;): As before linear interpolation between the function at alpha &lt;= 60 and alpha = 90 is used to determine the pressure loss in case 3. 
 </p>
 
 <p>
-case 3 (60° &lt; alpha &lt;90°): As before linear interpolation between the function at alpha &lt;= 60 and alpha = 90 is used to determine the pressure loss in case 3. 
+The following figure <strong>Fig.2</strong> pressure loss coefficients of the branching channel and straight channel at alpha = 15&deg; are shown. (Currently not yet available)
 </p>
 
 <p>
-The following figure <strong>Fig.2</strong> pressure loss coefficients of the branching channel and straight channel at alpha = 15° are shown. (Currently not yet available)
+The following figure <strong>Fig.3</strong> pressure loss coefficients of the branching channel and straight channel at alpha = 30&deg; are shown. (Currently not yet available)
 </p>
 
 <p>
-The following figure <strong>Fig.3</strong> pressure loss coefficients of the branching channel and straight channel at alpha = 30° are shown. (Currently not yet available)
+The following figure <strong>Fig.4</strong> pressure loss coefficients of the branching channel and straight channel at alpha = 45&deg; are shown. (Currently not yet available)
 </p>
 
 <p>
-The following figure <strong>Fig.4</strong> pressure loss coefficients of the branching channel and straight channel at alpha = 45° are shown. (Currently not yet available)
+The following figure <strong>Fig.5</strong> pressure loss coefficients of the branching channel and straight channel at alpha = 60&deg; are shown. (Currently not yet available)
 </p>
 
 <p>
-The following figure <strong>Fig.5</strong> pressure loss coefficients of the branching channel and straight channel at alpha = 60° are shown. (Currently not yet available)
+The following figure <strong>Fig.6</strong> pressure loss coefficients of the branching channel and straight channel at alpha = 90&deg; are shown. (Currently not yet available)
 </p>
 
 <p>
-The following figure <strong>Fig.6</strong> pressure loss coefficients of the branching channel and straight channel at alpha = 90° are shown. (Currently not yet available)
-</p>
-
-<p>
-The following figures pressure loss coefficients of the branching channel <strong>Fig.7</strong> and straight channel <strong>Fig.8</strong> at alpha = 75° are shown. (Currently not yet available)
+The following figures pressure loss coefficients of the branching channel <strong>Fig.7</strong> and straight channel <strong>Fig.8</strong> at alpha = 75&deg; are shown. (Currently not yet available)
 </p>
 
 <p>

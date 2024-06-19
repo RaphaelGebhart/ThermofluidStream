@@ -85,10 +85,7 @@ The following figure, a resistance coefficient chart representing the pressure l
 <p>
 <img src=\"modelica://ThermofluidStream/Resources/Doku/Fluid_HTWG/HTWG_en_Markenzeichen_klein_pos_1C.png\" alt=\"HTWG Konstanz\" width=\"350\" height=\"100\">
 </p>
-</html>
-
-
-",                                                                 revisions=""),
+</html>"),
     Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}), graphics={
       Text(visible=displayInstanceName,
           extent={{-150,110},{150,70}},

@@ -36,13 +36,13 @@ Function calculating the pressure loss of a Y-shaped splitter of type II (<stron
 </p>
 
 <ul>
-<li>w_c: velocity at common channel [m/s]</li>
-<li>w_b: velocity at branching channel [m/s]</li>
-<li>w_s: velocity at straight channel [m/s]</li>
-<li>alpha: branching angle [rad]</li>
-<li>rho: density [kg/m^3]</li>
-<li>k: scaling factor for area ratio dependency at alpha = 90° [-]</li>
-<li>K'_b: correction factor for branching angle dependency [-]</li>
+  <li>w_c: velocity at common channel [m/s]</li>
+  <li>w_b: velocity at branching channel [m/s]</li>
+  <li>w_s: velocity at straight channel [m/s]</li>
+  <li>alpha: branching angle [rad]</li>
+  <li>rho: density [kg/m^3]</li>
+  <li>k: scaling factor for area ratio dependency at alpha = 90° [-]</li>
+  <li>K'_b: correction factor for branching angle dependency [-]</li>
 </ul>
 
 <p>
@@ -50,17 +50,17 @@ Calculation according to Idelchik (1960). The pressure loss is calculated as:
 </p>
 
 <ul>
-<li>in branch: <code>dp_b = rho/2 * zeta_cb * w_c^2</code></li>
-<li>in straight channel: <code>dp_s = rho/2 * zeta_cs * w_c^2</code></li>
+  <li>in branch: <code>dp_b = rho/2 * zeta_cb * w_c^2</code></li>
+  <li>in straight channel: <code>dp_s = rho/2 * zeta_cs * w_c^2</code></li>
 </ul>
 
 <p>
 As you can see above both pressure loss calculation are with respect to the velocity at the common branch. The <strong>pressure loss coefficient of the branch zeta_cb</strong> is calculated as:
 </p>
 
-<p>
-<code>zeta_cb =1 + (w_relbc)^2 - 2*w_relbc *cos(alpha) - K'_b * (w_relbc)^2</code>
-</p>
+<blockquote><pre>
+zeta_cb =1 + (w_relbc)^2 - 2*w_relbc *cos(alpha) - K'_b * (w_relbc)^2
+</pre></blockquote>
 
 <p>
 Idel'chik provides table data for the coefficient K'_b. Since no sufficiently precise approximation equation can be defined for this factor, a table is also used for implementation.
@@ -101,17 +101,17 @@ taking the area ratio dependency at <code>alpha = 90°</code> into account.
 A 4th order polynomial is selected as the basis function and fitted to the data set:
 </p>
 
-<p>
-<code> zeta_cs_base = 0.5345*w_relsc^4 - 1.124+w_relsc^3 + 1.73*w_relsc^2 - 2.146*w_relsc + 1.005</code>
-</p>
+<blockquote><pre>
+zeta_cs_base = 0.5345*w_relsc^4 - 1.124+w_relsc^3 + 1.73*w_relsc^2 - 2.146*w_relsc + 1.005
+</pre></blockquote>
 
 <p>
 In order to obtain a set of curves. the basis function is expanded by the scaling factor k.
 </p>
 
-<p>
-<code> zeta_cs = k*0.5345*w_relsc^4 - k*1.124+w_relsc^3 + k*1.73*w_relsc^2 - 2.146*w_relsc + 1.005</code>
-</p>
+<blockquote><pre>
+zeta_cs = k*0.5345*w_relsc^4 - k*1.124+w_relsc^3 + k*1.73*w_relsc^2 - 2.146*w_relsc + 1.005
+</pre></blockquote>
 
 <p>
 As befor since no rational approximation has been found the scaling factor is implemented using a look-up table.
