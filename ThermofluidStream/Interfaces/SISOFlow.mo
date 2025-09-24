@@ -11,6 +11,8 @@ partial model SISOFlow "Base Model with basic flow eqautions for SISO"
       </html>"));
   parameter Utilities.Units.Inertance L = dropOfCommons.L "Inertance"
     annotation(Dialog(tab="Advanced"));
+  parameter Boolean neglectInertance = dropOfCommons.neglectInertance "=false, if mass flow rate dynamics are neglected - advanced mode!"
+    annotation(Dialog(tab="Advanced"),Evaluate=true, HideResult=true);
   parameter StateSelect m_flowStateSelect = StateSelect.default "State selection for mass flow rate"
     annotation(Dialog(tab="Advanced"));
   parameter InitializationMethods initM_flow = ThermofluidStream.Utilities.Types.InitializationMethods.none "Initialization method for mass flow rate"
@@ -59,7 +61,11 @@ initial equation
 equation
 
   inlet.m_flow + outlet.m_flow = 0;
-  outlet.r = inlet.r + dr_corr - der(inlet.m_flow) * L;
+  if not neglectInertance then
+    outlet.r = inlet.r + dr_corr - der(inlet.m_flow) * L;
+  else
+    outlet.r = inlet.r + dr_corr;
+  end if;
 
   if clip_p_out then
     p_out = max(p_min, p_in + dp);
@@ -77,5 +83,9 @@ equation
 <p>If p_out should be lower the p_min, the remaining pressure drop is added on the difference in inertial pressure r, basically accelerating or decelerating the massflow. </p>
 <p>The component offers different initialization methods for the massflow, as well as several parameters used in the equations above. </p>
 <p>The clipping of the massflow can be turned off (this should be done by the modeler as a final modificator while extending to hide this option from the enduser).</p>
-</html>"));
+</html>"), Icon(graphics={Ellipse(visible = neglectInertance,
+          extent={{80,40},{100,20}},
+          lineColor={238,46,47},
+          fillColor={238,46,47},
+          fillPattern=FillPattern.Solid)}));
 end SISOFlow;

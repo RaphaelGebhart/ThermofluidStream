@@ -10,6 +10,8 @@ model SplitterN "Splitter with one inlet and N outlets"
   parameter Integer N(min=1) = 1 "Number of outputs";
   parameter Utilities.Units.Inertance L=dropOfCommons.L "Inertance of each inlet/outlet"
     annotation (Dialog(tab="Advanced"));
+  parameter Boolean neglectInertance = dropOfCommons.neglectInertance "=true, if mass flow rate dynamics are neglected - advanced mode!"
+    annotation(Dialog(tab="Advanced"),Evaluate=true, HideResult=true);
 
   Interfaces.Inlet inlet(redeclare package Medium = Medium) "Inlet"
     annotation (Placement(transformation(extent={{-120,-20},{-80,20}}),
@@ -22,10 +24,18 @@ protected
   SI.Pressure r_mix "Inertial pressure of mixture";
 
 equation
-  der(inlet.m_flow) * L = inlet.r - r_mix;
+  if not neglectInertance then
+    der(inlet.m_flow) * L = inlet.r - r_mix;
+  else
+    0 = inlet.r - r_mix;
+  end if;
 
   for i in 1:N loop
-    der(outlets[i].m_flow) * L = outlets[i].r - r_mix;
+    if not neglectInertance then
+      der(outlets[i].m_flow) * L = outlets[i].r - r_mix;
+    else
+      0 = outlets[i].r - r_mix;
+    end if;
     outlets[i].state = inlet.state;
   end for;
 
@@ -57,6 +67,11 @@ equation
         Text(
           extent={{120,-20},{80,-60}},
           textColor={175,175,175},
-          textString="%N")}),
+          textString="%N"),
+        Ellipse(visible = neglectInertance,
+          extent={{80,40},{100,20}},
+          lineColor={238,46,47},
+          fillColor={238,46,47},
+          fillPattern=FillPattern.Solid)}),
     Diagram(coordinateSystem(preserveAspectRatio=true)));
 end SplitterN;

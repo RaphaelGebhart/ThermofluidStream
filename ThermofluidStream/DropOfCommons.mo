@@ -3,7 +3,8 @@ model DropOfCommons "Model for global parameters"
 
   parameter Utilities.Units.Inertance L = 0.01 "Inertance of the flow"
       annotation(Dialog(tab="Advanced"));
-
+  parameter Boolean neglectInertance = false "=true, if mass flow rate dynamics are neglected - advanced mode!"
+    annotation(Dialog(tab="Advanced"),Evaluate=true, HideResult=true, choices(checkBox=true));
   parameter SI.MassFlowRate m_flow_reg = 0.01
     "Regularization threshold of mass flow rate"
     annotation(Dialog(group="Regularization"));

@@ -9,6 +9,8 @@ model SplitterT2 "Splitter with one inlet and two oulets"
 </html>"));
   parameter Utilities.Units.Inertance L=dropOfCommons.L "Inertance of each inlet/outlet"
     annotation (Dialog(tab="Advanced"));
+  parameter Boolean neglectInertance = dropOfCommons.neglectInertance "=true, if mass flow rate dynamics are neglected - advanced mode!"
+    annotation(Dialog(tab="Advanced"),Evaluate=true, HideResult=true);
 
   Interfaces.Inlet inlet(redeclare package Medium = Medium)
     annotation (Placement(transformation(extent={{-120,-20},{-80,20}})));
@@ -20,6 +22,7 @@ model SplitterT2 "Splitter with one inlet and two oulets"
     displayInstanceName=true,
     final N=2,
     final L=L,
+    final neglectInertance = neglectInertance,
     redeclare package Medium = Medium)
     annotation (Placement(transformation(extent={{-40,-10},{-20,10}})));
 
@@ -66,6 +69,16 @@ equation
         Text(
           extent={{80,60},{120,20}},
           textColor={175,175,175},
-          textString="B")}),
+          textString="B"),
+        Ellipse(visible = neglectInertance,
+          extent={{80,-20},{100,-40}},
+          lineColor={238,46,47},
+          fillColor={238,46,47},
+          fillPattern=FillPattern.Solid),
+        Ellipse(visible = neglectInertance,
+          extent={{20,100},{40,80}},
+          lineColor={238,46,47},
+          fillColor={238,46,47},
+          fillPattern=FillPattern.Solid)}),
     Diagram(coordinateSystem(preserveAspectRatio=true)));
 end SplitterT2;
