@@ -38,8 +38,8 @@ partial model SISOFlow "Base Model with basic flow eqautions for SISO"
   SI.Pressure dr_corr "Correction of inertial pressure difference";
   SI.Pressure dp "Pressure difference";
 
+  // protected
   // inlet state quantities
-protected
   SI.Pressure p_in = Medium.pressure(inlet.state) "Inlet pressure";
   SI.SpecificEnthalpy h_in = Medium.specificEnthalpy(inlet.state) "Inlet specific enthalpy";
   Medium.MassFraction Xi_in[Medium.nXi] = Medium.massFraction(inlet.state) "Inlet mass fractions";
