@@ -8,7 +8,7 @@ model SplitterT2 "Splitter with one inlet and two oulets"
 <p>Medium package used in the Component. Make sure it is the same one as all the components connected to all fluid ports are using. </p>
 </html>"));
   parameter Utilities.Units.Inertance L=dropOfCommons.L "Inertance of each inlet/outlet"
-    annotation (Dialog(tab="Advanced"));
+    annotation(Dialog(tab="Advanced", enable = not neglectInertance), Evaluate = neglectInertance, HideResult = neglectInertance);
   parameter Boolean neglectInertance = dropOfCommons.neglectInertance "=true, if mass flow rate dynamics are neglected - advanced mode!"
     annotation(Dialog(tab="Advanced"),Evaluate=true, HideResult=true);
 

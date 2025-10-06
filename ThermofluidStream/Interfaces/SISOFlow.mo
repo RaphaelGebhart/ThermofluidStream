@@ -10,7 +10,7 @@ partial model SISOFlow "Base Model with basic flow eqautions for SISO"
     <p>Medium package used in the Component. Make sure it is the same as the components connected to both ports are using.</p>
       </html>"));
   parameter Utilities.Units.Inertance L = dropOfCommons.L "Inertance"
-    annotation(Dialog(tab="Advanced"));
+    annotation(Dialog(tab="Advanced", enable = not neglectInertance), Evaluate = neglectInertance, HideResult = neglectInertance);
   parameter Boolean neglectInertance = dropOfCommons.neglectInertance "=false, if mass flow rate dynamics are neglected - advanced mode!"
     annotation(Dialog(tab="Advanced"),Evaluate=true, HideResult=true);
   parameter StateSelect m_flowStateSelect = StateSelect.default "State selection for mass flow rate"

@@ -9,7 +9,7 @@ model SplitterN "Splitter with one inlet and N outlets"
 </html>"));
   parameter Integer N(min=1) = 1 "Number of outputs";
   parameter Utilities.Units.Inertance L=dropOfCommons.L "Inertance of each inlet/outlet"
-    annotation (Dialog(tab="Advanced"));
+    annotation(Dialog(tab="Advanced", enable = not neglectInertance), Evaluate = neglectInertance, HideResult = neglectInertance);
   parameter Boolean neglectInertance = dropOfCommons.neglectInertance "=true, if mass flow rate dynamics are neglected - advanced mode!"
     annotation(Dialog(tab="Advanced"),Evaluate=true, HideResult=true);
 
