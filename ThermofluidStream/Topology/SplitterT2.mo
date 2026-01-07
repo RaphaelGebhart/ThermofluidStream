@@ -80,5 +80,9 @@ equation
           lineColor={238,46,47},
           fillColor={238,46,47},
           fillPattern=FillPattern.Solid)}),
-    Diagram(coordinateSystem(preserveAspectRatio=true)));
+    Diagram(coordinateSystem(preserveAspectRatio=true)),
+    Documentation(info="<html>
+<p>Alternative three-port splitter for dividing one upstream stream into two downstream branches. </p>
+<p>This model provides the same functional topology role as SplitterT1 but with an alternative internal formulation. </p>
+</html>"));
 end SplitterT2;

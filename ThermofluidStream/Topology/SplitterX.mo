@@ -103,5 +103,8 @@ equation
           lineColor={238,46,47},
           fillColor={238,46,47},
           fillPattern=FillPattern.Solid)}),
-    Diagram(coordinateSystem(preserveAspectRatio=true)));
+    Diagram(coordinateSystem(preserveAspectRatio=true)),
+    Documentation(info="<html>
+<p>Multi-branch splitter for distributing one upstream stream into multiple downstream branches in an X-type topology. Use this component when you need a compact representation of a higher-order split without cascading several T-splitters.</p>
+</html>"));
 end SplitterX;

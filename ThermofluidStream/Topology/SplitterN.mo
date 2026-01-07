@@ -73,5 +73,8 @@ equation
           lineColor={238,46,47},
           fillColor={238,46,47},
           fillPattern=FillPattern.Solid)}),
-    Diagram(coordinateSystem(preserveAspectRatio=true)));
+    Diagram(coordinateSystem(preserveAspectRatio=true)),
+    Documentation(info="<html>
+<p>Generic splitter with one upstream connection and an array of <strong>N</strong> downstream connections. Use this model to parameterize the number of branches and avoid building large splitter trees manually. This is the recommended approach for scalable network templates.</p>
+</html>"));
 end SplitterN;
