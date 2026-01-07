@@ -54,9 +54,19 @@ to specify system properties.",Icon(coordinateSystem(preserveAspectRatio=false),
           pattern=LinePattern.None,
           smooth=Smooth.Bezier,
           fillColor={19,76,141},
+          fillPattern=FillPattern.Solid),
+        Polygon(
+          points={{40,-90},{80,-90},{80,-70},{60,-70},{60,-30},{40,-30},{40,-90}},
+          lineColor={0,0,0},
+          fillColor=if neglectInertance then {162,29,33} else {0,140,72},
           fillPattern=FillPattern.Solid)}), Diagram(
         coordinateSystem(preserveAspectRatio=false)),
     Documentation(revisions="<html>
 <p><img src=\"modelica:/ThermofluidStream/Resources/dlr_logo.png\"/>(c) 2020-2021, DLR, Institute of System Dynamics and Control</p>
+</html>", info="<html>
+  <p>
+    Additionnal parameter <code>neglectInertance</code> to activate or deactivate the inertance. The letter L on the icon layer changes color to indicate whether the inertance is neglected 
+    <span style=\"color: #ee2e2f;\">(neglectInertance = true)</span> or not <span style=\"color: #008c48;\">(neglectInertance = false)</span>.</p>
+  <p>
 </html>"));
 end DropOfCommons;
