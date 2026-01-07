@@ -57,9 +57,9 @@ to specify system properties.",Icon(coordinateSystem(preserveAspectRatio=false),
           fillPattern=FillPattern.Solid),
         Polygon(
           points={{40,-90},{80,-90},{80,-70},{60,-70},{60,-30},{40,-30},{40,-90}},
-          lineColor={0,0,0},
-          fillColor=if neglectInertance then {162,29,33} else {0,140,72},
-          fillPattern=FillPattern.Solid)}), Diagram(
+          fillColor= {162,29,33},
+          fillPattern= if neglectInertance then FillPattern.Solid else FillPattern.None,
+          pattern=LinePattern.None)}),      Diagram(
         coordinateSystem(preserveAspectRatio=false)),
     Documentation(revisions="<html>
 <p><img src=\"modelica:/ThermofluidStream/Resources/dlr_logo.png\"/>(c) 2020-2021, DLR, Institute of System Dynamics and Control</p>
