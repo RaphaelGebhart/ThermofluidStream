@@ -28,10 +28,10 @@ the inlet the source is connected to.
     annotation(Dialog(group="Specific enthalpy", enable = setEnthalpy),Evaluate=true, HideResult=true, choices(checkBox=true));
   parameter SI.SpecificEnthalpy h0_par = Medium.h_default "Specific enthalpy set value"
     annotation(Dialog(group="Specific enthalpy", enable = setEnthalpy and not enthalpyFromInput));
-  parameter Utilities.Units.Inertance L=dropOfCommons.L "Inertance"
-    annotation(Dialog(tab="Advanced", enable = not neglectInertance), Evaluate = neglectInertance, HideResult = neglectInertance);
   parameter Boolean neglectInertance = dropOfCommons.neglectInertance "=true, if mass flow rate dynamics are neglected - advanced mode!"
     annotation(Dialog(tab="Advanced"),Evaluate=true, HideResult=true);
+  parameter Utilities.Units.Inertance L=dropOfCommons.L "Inertance"
+    annotation(Dialog(tab="Advanced", enable = not neglectInertance), HideResult = neglectInertance);
   // ------ Parameter Display Configuration  ------------------------
   parameter Boolean displayPressure = true "= true, if pressure p0_par is displayed"
     annotation(Dialog(tab="Layout",group="Display parameters",enable=displayParameters and not pressureFromInput),Evaluate=true, HideResult=true, choices(checkBox=true));
