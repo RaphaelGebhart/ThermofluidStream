@@ -135,7 +135,7 @@ algorithm
 
   annotation (Documentation(info="<html>
   <p>
-    <b>Deprecation notice:</b>
+    <strong>Deprecation notice:</strong>
   </p>
 
   <p>
@@ -146,7 +146,7 @@ algorithm
   </p>
 
   <p>
-    <b>Recommended usage:</b>
+    <strong>Recommended usage:</strong>
   </p>
 
   <ul>
@@ -162,7 +162,7 @@ algorithm
   </ul>
   
   <p>
-    <b>Remark:</b>
+    <strong>Remark:</strong>
   </p>  
 
   <p>
@@ -174,7 +174,7 @@ algorithm
   </p>
     
   <p>
-    <b>Documentation:</b>
+    <strong>Documentation:</strong>
   </p>
 
   <p>
