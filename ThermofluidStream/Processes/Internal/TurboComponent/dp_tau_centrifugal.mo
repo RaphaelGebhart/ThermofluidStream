@@ -139,7 +139,7 @@ algorithm
   </p>
 
   <p>
-    The legacy Reynolds formulation (<code>useLegacyReynolds = true</code>) is <b>deprecated</b>. 
+    The legacy Reynolds formulation (<code>useLegacyReynolds = true</code>) is <strong>deprecated</strong>. 
     When enabled, a warning is issued to inform the user about
     the upcoming removal.
     The legacy option will be <strong>removed in v2.0</strong> of the ThermoFluidStream Library.
