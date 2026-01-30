@@ -25,7 +25,7 @@ extends Modelica.Icons.Example;
   ThermofluidStream.Processes.Pump pump(
     redeclare package Medium = Medium_liquid,
     initM_flow=ThermofluidStream.Utilities.Types.InitializationMethods.state,
-    redeclare function dp_tau_pump = ThermofluidStream.Processes.Internal.TurboComponent.dp_tau_centrifugal)
+    redeclare function dp_tau_pump = ThermofluidStream.Processes.Internal.TurboComponent.dp_tau_centrifugal (useLegacyReynolds=false))
     annotation (Placement(transformation(extent={{-20,10},{-40,30}})));
   ThermofluidStream.Processes.ThermalConvectionPipe thermalConvectionPipe(
     redeclare package Medium = Medium_liquid,
@@ -279,5 +279,13 @@ equation
     Documentation(info="<html>
 <p>This cooling cycle is regulated to hit a temperature target. The load is a prescribed heatflow and comes from a table.</p>
 <p><br>Owner: <a href=\"mailto:niels.weber@dlr.de\">Niels Weber</a></p>
+</html>", revisions="<html>
+  <ul>
+    <li>
+      2026, by Raphael Gebhart (raphael.gebhart@dlr.de):<br>
+      Decreased <code>PI.k</code> from 3000 to 300.<br> 
+      Changed model to use new version of <code>dp_tau_const_isentrop</code> pump function.
+    </li>
+  </ul>
 </html>"));
 end SimpleCoolingCycle;

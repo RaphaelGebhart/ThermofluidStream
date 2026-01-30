@@ -2,8 +2,7 @@ within ThermofluidStream.Media.additionalMedia.SingleGasAndIncompressible.Exampl
 model TestSimpleLoopJP8DryAir
 
       replaceable package SecondaryMedium =
-        ThermofluidStream.Media.XRGMedia.CO2_ph constrainedby
-    ThermofluidStream.Media.myMedia.Interfaces.PartialMedium
+        ThermofluidStream.Media.XRGMedia.CO2_ph constrainedby ThermofluidStream.Media.myMedia.Interfaces.PartialMedium
       annotation(choicesAllMatching=true);
 
     replaceable package RefrigerantMedium =
@@ -12,8 +11,7 @@ model TestSimpleLoopJP8DryAir
       annotation(choicesAllMatching=true);
 
     replaceable package TertiaryMedium =
-      ThermofluidStream.Media.additionalMedia.SingleGasAndIncompressible.JP8DryAir
-                                                                                        constrainedby
+      ThermofluidStream.Media.additionalMedia.SingleGasAndIncompressible.JP8DryAir      constrainedby
     ThermofluidStream.Media.myMedia.Interfaces.PartialMedium
       annotation(choicesAllMatching=true);
   //     TertiaryMedium.BaseProperties terMedium;
@@ -32,7 +30,7 @@ model TestSimpleLoopJP8DryAir
           TertiaryMedium,
       omega_from_input=true,
       redeclare function dp_tau_pump =
-        ThermofluidStream.Processes.Internal.TurboComponent.dp_tau_centrifugal)
+        ThermofluidStream.Processes.Internal.TurboComponent.dp_tau_centrifugal(useLegacyReynolds = false))
       annotation (Placement(transformation(extent={{88,-80},{108,-60}})));
 
     ThermofluidStream.Processes.ConductionElement conductionElement(redeclare
@@ -139,5 +137,12 @@ Simulation and Thermal Analysis,
 Vehicle Systems,
 SAAB Aerosystems, 2024
 </p>
+</html>", info="<html>
+  <ul>
+    <li>
+      2026, by Raphael Gebhart (raphael.gebhart@dlr.de):<br>
+      Introduced new version of <code>dp_tau_const_isentrop</code> pump function.
+    </li>
+  </ul>
 </html>"));
 end TestSimpleLoopJP8DryAir;

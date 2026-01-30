@@ -15,12 +15,19 @@ Medium model needet to compute properties from the inlet_state.
   input Medium.MassFlowRate m_flow_norm "Normalization mass flow rate";
   input SI.AngularVelocity omega_norm "Normalization angular velocity";
   input Medium.Density rho_min "Minimum density (relevant at p=0)";
-
+  input Real showLegacyWarning = 0.0 "Shows legacy warning in dp_tau_const_isentrop if >= 1.0"; // Real to avoid events
   output SI.Pressure dp "Pressure difference";
   output SI.Torque tau_st "Steady state torque";
 
   annotation(Inline=true, Documentation(info="<html>
 <p>This function computes the pressure differential and the moment needed for static operation of a partialTurboComponent in its current state. </p>
 <p>By changing this function the partialTurboComponent implements different kinds of turbo components like fans, pumps, compressors, turbines, etc.</p>
+</html>", revisions="<html>
+  <ul>
+    <li>
+      2026, by Raphael Gebhart (raphael.gebhart@dlr.de):<br>
+      Added showLegacyWarning, required for dp_tau_const_isentrop.
+    </li>
+  </ul>
 </html>"));
 end partial_dp_tau;

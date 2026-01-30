@@ -2,19 +2,16 @@ within ThermofluidStream.Media.additionalMedia.Incompressible;
 model TestLiqLoopDowcal100
 
        replaceable package SecondaryMedium =
-         ThermofluidStream.Media.XRGMedia.CO2_ph constrainedby
-    ThermofluidStream.Media.myMedia.Interfaces.PartialMedium
+         ThermofluidStream.Media.XRGMedia.CO2_ph constrainedby ThermofluidStream.Media.myMedia.Interfaces.PartialMedium
        annotation(choicesAllMatching=true);
 
      replaceable package RefrigerantMedium =
-       ThermofluidStream.Media.XRGMedia.CO2_ph  constrainedby
-    ThermofluidStream.Media.myMedia.Interfaces.PartialMedium
+       ThermofluidStream.Media.XRGMedia.CO2_ph  constrainedby ThermofluidStream.Media.myMedia.Interfaces.PartialMedium
        annotation(choicesAllMatching=true);
 
      replaceable package TertiaryMedium =
        ThermofluidStream.Media.additionalMedia.Incompressible.Dowcal100
-                 constrainedby
-    ThermofluidStream.Media.myMedia.Interfaces.PartialMedium
+                 constrainedby ThermofluidStream.Media.myMedia.Interfaces.PartialMedium
        annotation(choicesAllMatching=true);
 
      ThermofluidStream.Sensors.MultiSensor_Tpm multiSensor_Tpm1(
@@ -53,7 +50,7 @@ model TestLiqLoopDowcal100
            TertiaryMedium,
        omega_from_input=true,
        redeclare function dp_tau_pump =
-        ThermofluidStream.Processes.Internal.TurboComponent.dp_tau_centrifugal)
+        ThermofluidStream.Processes.Internal.TurboComponent.dp_tau_centrifugal(useLegacyReynolds = false))
        annotation (Placement(transformation(extent={{92,-82},{112,-62}})));
 
      ThermofluidStream.Processes.ConductionElement conductionElement(redeclare
@@ -242,5 +239,13 @@ equation
                    fillPattern = FillPattern.Solid,
                    points={{-18,74},{170,-46},{-18,-158},{-18,74}})}),
        Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-180,-180},{260,
-               100}})));
+               100}})),
+    Documentation(info="<html>
+  <ul>
+    <li>
+      2026, by Raphael Gebhart (raphael.gebhart@dlr.de):<br>
+      Introduced new version of <code>dp_tau_const_isentrop</code> pump function.
+    </li>
+  </ul>
+</html>"));
 end TestLiqLoopDowcal100;

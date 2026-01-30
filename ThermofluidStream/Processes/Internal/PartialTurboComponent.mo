@@ -72,7 +72,7 @@ protected
   SI.AngularVelocity omega(stateSelect=omegaStateSelect) "Angular velocity";
   SI.Torque tau "Torque";
   SI.Torque tau_normalized "Normalized torque";
-
+  Real showLegacyWarning = if initial() then 1.0 else 0.0 "Shows initial legacy warning in legacy dp_tau_const_isentrop function; will be removed in v2.0";
 
 initial equation
   if initOmega == InitializationMethods.state then
@@ -89,7 +89,7 @@ initial equation
 
 equation
   // Compute pressure difference dp, and steady-state torque tau_st
-  (dp, tau_st) = dp_tau(m_flow, omega, inlet.state, m_flow_reg, omega_reg, rho_min);
+  (dp, tau_st) = dp_tau(m_flow, omega, inlet.state, m_flow_reg, omega_reg, rho_min, showLegacyWarning);
   h_out = h_in + dh;
   Xi_out = Xi_in;
 
@@ -173,5 +173,12 @@ equation
 <li>If one wants to prescribe a speed of the component, instead of being interested in the omega dynamics, enable omegaFromInput.</li>
 <li>The heatport is only of interest, if the overall energy of the system must be conserved.</li>
 </ul>
+</html>", revisions="<html>
+  <ul>
+    <li>
+      2026, by Raphael Gebhart (raphael.gebhart@dlr.de):<br>
+      Added showLegacyWarning, required for warning of legacy dp_tau_const_isentrop function.
+    </li>
+  </ul>
 </html>"));
 end PartialTurboComponent;
