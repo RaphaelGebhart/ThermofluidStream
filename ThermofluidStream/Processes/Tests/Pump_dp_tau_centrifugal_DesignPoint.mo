@@ -332,6 +332,16 @@ equation
   </p>
 
   <p>
+    The legacy version does not reproduce the specified design point.
+    The corrected version is much closer to the specified design point, but still
+    shows a small offset of about 5&nbsp;%.
+    This remaining deviation is caused by viscosity effects that are not
+    compensated at the design point.
+    An initial attempt to compensate these effects was only able to slightly
+    reduce the offset.
+  </p>
+
+  <p>
     <img src=\"modelica://ThermofluidStream/Resources/Doku/ThermofluidStream.Processes.Tests.Pump_dp_tau_centrifugal_DesignPoint.png\" width=\"750\">
   </p>
 
