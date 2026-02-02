@@ -1,10 +1,12 @@
 Flow_Resistance
+CentrifugalPump
 Pump
 Compressor
 Turbine
 ConvectivePipe
 ConvectivePipe_serial
 ConductionElement
+ConductionElementVariable
 TransportDelay
 Nozzle
 Power
