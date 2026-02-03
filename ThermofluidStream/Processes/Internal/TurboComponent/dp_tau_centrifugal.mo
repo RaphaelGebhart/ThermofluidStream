@@ -96,25 +96,18 @@ protected
   Real f_eta(unit="1") "Scaling factor for efficiency";
 
 algorithm
-  if showLegacyWarning >= 1.0 then
-    assert(not useLegacyReynolds,
-      "\n"
-      + "============================================================\n"
-      + "  ThermoFluidStream WARNING – DEPRECATED BEHAVIOR\n"
-      + "============================================================\n"
-      + "Legacy Reynolds formulation is enabled in pump characteristic\n"
-      + "'dp_tau_centrifugal'.\n"
-      + "\n"
-      + "This behavior is DEPRECATED and will be REMOVED in v2.0.\n"
-      + "\n"
-      + "Action required:\n"
-      + "  Set useLegacyReynolds = false to enable the corrected formulation.\n"
-      + "\n"
-      + "Component:\n"
-      + "  "  + name + "\n"
-      + "============================================================\n",
-      AssertionLevel.warning);
-  end if;
+  assert(not useLegacyReynolds,
+    "\n"
+    + "====================================================================================\n"
+    + "              ThermoFluidStream WARNING – DEPRECATED BEHAVIOR\n"
+    + "====================================================================================\n"
+    + "Legacy Reynolds formulation is enabled in pump characteristic 'dp_tau_centrifugal'.\n"
+    + "This behavior is DEPRECATED and will be REMOVED in v2.0.\n"
+    + "Action required: Set useLegacyReynolds = false to enable the corrected formulation.\n"
+    + "Component: "  + name + "\n"
+    + "Remark: Use OMEdit or Dymola 2025x and later to avoid repeated warnings.\n"
+    + "====================================================================================\n",
+    AssertionLevel.warning);
   //limit abs(omega) to effectiveley limit the Re_mod to Re_mod_min
   omega_hat  := max(Re_mod_min/(omega_s^1.5*f_q^0.75)/r^2*nu_in, abs(omega));
   V_flow_BEP := K_D*omega_hat;

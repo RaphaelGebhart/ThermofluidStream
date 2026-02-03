@@ -15,7 +15,7 @@ Medium model needet to compute properties from the inlet_state.
   input Medium.MassFlowRate m_flow_norm "Normalization mass flow rate";
   input SI.AngularVelocity omega_norm "Normalization angular velocity";
   input Medium.Density rho_min "Minimum density (relevant at p=0)";
-  input Real showLegacyWarning = 0.0 "Shows legacy warning in dp_tau_const_isentrop if >= 1.0"; // Real to avoid events
+
   output SI.Pressure dp "Pressure difference";
   output SI.Torque tau_st "Steady state torque";
 
